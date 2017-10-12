@@ -1,0 +1,5 @@
+Host: career_books.morozov.ca
+
+User-agent: *
+Disallow: /admin/
+Disallow: /api/

@@ -1,0 +1,18 @@
+# DO NOT IMPORT * from settings.common AS IT MASKS ENV`S IMPORTS!
+from career_books.settings.common import ALLOWED_HOSTS
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'books',
+        'USER': 'none',
+        'PASSWORD': 'none',
+        'HOST': 'localhost',
+        'PORT': '',
+    }
+}
+
+ALLOWED_HOSTS += ['192.168.1.%d' % num for num in range(1, 255)]
+
+SECRET_KEY = '3p&n+*3j7+ihih2i3h))***dshih2'
