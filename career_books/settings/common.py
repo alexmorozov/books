@@ -38,6 +38,7 @@ INSTALLED_APPS = (
     'lib',
     'dal',
     'dal_select2',
+    'li',
     'survey',
 )
 

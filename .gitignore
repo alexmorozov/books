@@ -10,6 +10,7 @@ career_books/apps/*/static/coffee/*.js
 career_books/static/coffee/*.js
 career_books/static/coffee/*/*.js
 /django-kupola/
+/parsedin/
 
 .idea
 /media/*

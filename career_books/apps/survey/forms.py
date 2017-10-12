@@ -8,6 +8,8 @@ from django import forms
 
 from dal import autocomplete
 
+from survey.models import Result
+
 
 class GoodReadsACForm(forms.Form):
     AC_URL = 'https://www.goodreads.com/search/index.xml?q={query}&key={key}'
@@ -45,10 +47,19 @@ class GoodReadsACForm(forms.Form):
         return suggestions
 
 
-class SurveyForm(forms.Form):
-    title1 = forms.CharField(
-        widget=autocomplete.Select2(url='survey_book_autocomplete',
-                                    attrs={'data-html': True,
-                                           'data-placeholder': 'Choose...'
-                                           })
-    )
+class SurveyForm(forms.ModelForm):
+    class Meta:
+        model = Result
+        ac_widget = autocomplete.Select2(
+            url='survey_book_autocomplete',
+            attrs={
+                'data-html': True,
+                'data-placeholder': 'Click here and start typing the title.',
+            }
+        )
+        fields = ['title1', 'title2', 'title3', ]
+        widgets = {
+            'title1': ac_widget,
+            'title2': ac_widget,
+            'title3': ac_widget,
+        }

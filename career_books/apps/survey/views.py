@@ -1,3 +1,4 @@
+from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.http.response import JsonResponse
 from django.views import generic
@@ -5,11 +6,25 @@ from django.views import generic
 from dal_select2.views import Select2ViewMixin
 
 from survey.forms import GoodReadsACForm, SurveyForm
+from survey.models import Result
 
 
-class SurveyView(generic.FormView):
+class SurveyView(generic.UpdateView):
     template_name = 'survey/form.html'
+    model = Result
     form_class = SurveyForm
+    slug_url_kwarg = 'uid'
+    slug_field = 'uid'
+
+    def get_success_url(self):
+        return reverse('survey_thanks', kwargs={'uid': self.object.uid})
+
+
+class SurveyThanks(generic.DetailView):
+    template_name = 'survey/thanks.html'
+    model = Result
+    slug_url_kwarg = 'uid'
+    slug_field = 'uid'
 
 
 class GoodReadsAutocomplete(Select2ViewMixin, generic.View):
@@ -28,15 +43,3 @@ class GoodReadsAutocomplete(Select2ViewMixin, generic.View):
 
     def has_more(self, context):
         return False
-
-
-def goodreads_autocomplete(request):
-    """
-    Autocomplete a book title from GoodReads.
-    """
-    form = GoodReadsACForm(request.GET or None)
-    if not form.is_valid():
-        raise Http404
-    return JsonResponse(
-        dict(suggestions=form.get_suggestions())
-    )
