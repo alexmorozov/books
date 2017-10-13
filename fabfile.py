@@ -4,8 +4,8 @@ from kupola.fabric_class import DjangoFabric,\
 
 class Fabric(DjangoFabric):
     host = 'vm4'
-    remote_base_path = '/home/inductor/.virtualenvs/'
-    remote_project_path = '/home/inductor/.virtualenvs/books/'
+    remote_project_path = '/home/inductor/.virtualenvs/books/src'
+    remote_venv_path = '/home/inductor/.virtualenvs/books/'
     user = 'inductor'
     app_name = 'career_books'
     repository = 'git@github.com:alexmorozov/books.git'
