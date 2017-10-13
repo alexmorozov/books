@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://bootswatch.com/readable/bootstrap.min.css" crossorigin="anonymous">
     <title>{% block title %}{% endblock title %}</title>
     {% block extra-styles %}{% endblock extra-styles %}
+    {% block extra-head %}{% endblock extra-head %}
   </head>
   <body class="{% spaceless %}{% block bodyclass %}{% endblock %}{% endspaceless %}">
       <div class="container">
@@ -30,11 +31,20 @@
           <div class="row">
               <div class="col-lg-12">
                   <hr />
-                  <h4 class="spacer">Something is not working?</h4>
+              </div>
+          </div>
+          <div class="row">
+              <div class="col-lg-6 col-sm-12">
+                  <h5>Something is not working?</h5>
                   <p>
-                  Please drop me a line via Linkedin messages, I'd be happy to help!
-                  Book search by GoodReads.
-                  Interested in how this works? Check out the source code on Github.
+                    Please drop me a line <a href="https://www.linkedin.com/in/djangoengineer/">on Linkedin</a>, I'd be happy to help.
+                  <p>
+              </div>
+              <div class="col-lg-6 col-sm-12">
+                  <p>
+                    <h5>Links</h5>
+                    Book search by <a href="https://www.goodreads.com">GoodReads</a>.<br/>
+                    Interested in how this works? Check out the <a href="https://github.com/alexmorozov/books">source code on Github</a>.
                   </p>
               </div>
           </div>
