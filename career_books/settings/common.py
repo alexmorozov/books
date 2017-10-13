@@ -19,7 +19,7 @@ sys.path.insert(1, path('.'))
 ROOT_URLCONF = 'career_books.urls'
 WSGI_APPLICATION = 'career_books.wsgi.application'
 
-ALLOWED_HOSTS = ['career_books.morozov.ca']
+ALLOWED_HOSTS = ['books.morozov.ca']
 
 ADMINS = [
     ('Alex Morozov', 'alex@morozov.ca')
