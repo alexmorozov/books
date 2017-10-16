@@ -25,7 +25,7 @@ ADMINS = [
     ('Alex Morozov', 'alex@morozov.ca')
 ]
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +40,7 @@ INSTALLED_APPS = (
     'dal_select2',
     'li',
     'survey',
-)
+]
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',

@@ -39,3 +39,12 @@ class Result(models.Model):
 
     def __unicode__(self):
         return self.person.name
+
+
+class Invite(models.Model):
+    person = models.ForeignKey(
+        Person, related_name='invites')
+    form = models.ForeignKey(
+        Result, related_name='invites')
+    created = models.DateTimeField(
+        auto_now_add=True)
