@@ -19,11 +19,18 @@ def new_uid():
             return uid
 
 
+class ResultQuerySet(models.QuerySet):
+    def create_for(self, person):
+        self.create(person=person)
+
+
 class Result(models.Model):
     person = models.ForeignKey(
-        Person)
+        Person, related_name='form')
     created = models.DateTimeField(
         auto_now_add=True)
+    updated = models.DateTimeField(
+        auto_now=True)
     uid = models.CharField(
         max_length=10, unique=True, editable=False,
         default=new_uid)
@@ -36,6 +43,9 @@ class Result(models.Model):
     title3 = models.CharField(
         verbose_name='#3', default='',
         max_length=50, blank=True)
+
+
+    objects = ResultQuerySet.as_manager()
 
     def __unicode__(self):
         return self.person.name
