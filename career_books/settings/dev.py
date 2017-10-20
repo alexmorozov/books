@@ -51,6 +51,14 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
+        'survey': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'whws': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        },
     }
 }
 

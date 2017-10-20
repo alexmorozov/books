@@ -91,6 +91,10 @@ class Person(models.Model):
             return u'{o.name} ({o.company})'.format(o=self)
         return self.name
 
+    @property
+    def first_name(self):
+        return self.name.split()[0]
+
 
 class IncorrectContact(models.Model):
     """

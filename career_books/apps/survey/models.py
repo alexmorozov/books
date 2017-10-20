@@ -3,6 +3,8 @@
 import random
 import string
 
+from django.conf import settings
+from django.core.urlresolvers import reverse
 from django.db import models
 
 
@@ -23,10 +25,13 @@ class ResultQuerySet(models.QuerySet):
     def create_for(self, person):
         self.create(person=person)
 
+    def uninvited(self):
+        return self.filter(is_invited__isnull=True)
+
 
 class Result(models.Model):
     person = models.ForeignKey(
-        Person, related_name='form')
+        Person, related_name='forms')
     created = models.DateTimeField(
         auto_now_add=True)
     updated = models.DateTimeField(
@@ -43,18 +48,16 @@ class Result(models.Model):
     title3 = models.CharField(
         verbose_name='#3', default='',
         max_length=50, blank=True)
-
+    is_invited = models.DateTimeField(
+        null=True, blank=True)
 
     objects = ResultQuerySet.as_manager()
 
     def __unicode__(self):
         return self.person.name
 
-
-class Invite(models.Model):
-    person = models.ForeignKey(
-        Person, related_name='invites')
-    form = models.ForeignKey(
-        Result, related_name='invites')
-    created = models.DateTimeField(
-        auto_now_add=True)
+    def get_survey_url(self):
+        return 'http://{host}{url}'.format(
+            host=settings.ALLOWED_HOSTS[0],
+            url=reverse('survey_form', args=[self.uid, ]),
+        )

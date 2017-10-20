@@ -16,8 +16,8 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         avail = (Person.objects
-                 .annotate(Count('form'))
-                 .filter(is_connected=True, form__count=0))
+                 .annotate(Count('forms'))
+                 .filter(is_connected=True, forms__count=0))
         total = 0
         for person in avail:
             Result.objects.create_for(person)
