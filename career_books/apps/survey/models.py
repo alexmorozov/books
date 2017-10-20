@@ -104,7 +104,7 @@ class Result(models.Model):
         verbose_name='#3',
         related_name='title3')
     is_invited = models.DateTimeField(
-        null=True)
+        null=True, blank=True)
 
     objects = ResultQuerySet.as_manager()
 
