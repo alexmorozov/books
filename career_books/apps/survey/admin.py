@@ -1,7 +1,29 @@
 from django.contrib import admin
+from django.db.models import Q
 from django.utils.html import format_html
 
 from survey.models import Result, Book
+
+
+class IsFilledFilter(admin.SimpleListFilter):
+    parameter_name = 'is_filled'
+    title = 'Is filled out'
+    NO, YES = '0', '1'
+
+    def lookups(self, request, model_admin):
+        return (
+            (self.NO, 'No'),
+            (self.YES, 'Yes'),
+        )
+
+    def queryset(self, request, queryset):
+        lookup = Q(title1='') & Q(title2='') & Q(title3='')
+
+        if self.value() == self.NO:
+            return queryset.filter(lookup)
+
+        if self.value() == self.YES:
+            return queryset.exclude(lookup)
 
 
 @admin.register(Result)
@@ -10,6 +32,7 @@ class ResultAdmin(admin.ModelAdmin):
     readonly_fields = ['uid', 'created', 'updated', ]
     list_select_related = ('person', )
     search_fields = ['person__name', 'person__company__name', 'uid', ]
+    list_filter = [IsFilledFilter, ]
 
 
 @admin.register(Book)
