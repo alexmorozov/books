@@ -17,7 +17,11 @@ class IsFilledFilter(admin.SimpleListFilter):
         )
 
     def queryset(self, request, queryset):
-        lookup = Q(title1='') & Q(title2='') & Q(title3='')
+        lookup = (
+            Q(title1__isnull=True) &
+            Q(title2__isnull=True) &
+            Q(title3__isnull=True)
+        )
 
         if self.value() == self.NO:
             return queryset.filter(lookup)
