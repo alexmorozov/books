@@ -9,7 +9,7 @@ class ResultAdmin(admin.ModelAdmin):
     raw_id_fields = ['person', 'title1', 'title2', 'title3', ]
     readonly_fields = ['uid', 'created', 'updated', ]
     list_select_related = ('person', )
-    search_fields = ['person__name', 'person__company__name', ]
+    search_fields = ['person__name', 'person__company__name', 'uid', ]
 
 
 @admin.register(Book)

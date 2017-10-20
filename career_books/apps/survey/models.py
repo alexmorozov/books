@@ -103,6 +103,8 @@ class Result(models.Model):
     title3 = BookForeignKey(
         verbose_name='#3',
         related_name='title3')
+    is_invited = models.DateTimeField(
+        null=True)
 
     objects = ResultQuerySet.as_manager()
 
