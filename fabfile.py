@@ -13,5 +13,8 @@ class Fabric(DjangoFabric):
     local_db_name = 'books'
     use_bower = False
 
+    def fab_update_books(self):
+        self.fab_remote_manage('update_books_from_goodreads')
+
 
 __all__ = add_class_methods_as_functions(Fabric(), __name__)
