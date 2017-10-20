@@ -27,6 +27,14 @@ class GoodReadsACForm(forms.Form):
             return suggestions
 
         items = xmltodict.parse(response.content)
+
+        total = int(items
+                    .get('GoodreadsResponse', {})
+                    .get('search', {})
+                    .get('total-results', 0))
+        if not total:
+            return suggestions
+
         results = items['GoodreadsResponse']['search']['results']['work']
 
         if not isinstance(results, list):
