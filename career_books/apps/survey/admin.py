@@ -18,7 +18,7 @@ class BooleanFilter(admin.SimpleListFilter):
             return self.no(request, queryset)
 
         if self.value() == self.YES:
-            return queryset.yes(request, queryset)
+            return self.yes(request, queryset)
 
 
 class IsFilledFilter(BooleanFilter):
