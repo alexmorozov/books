@@ -83,6 +83,25 @@ class ResultQuerySet(models.QuerySet):
     def uninvited(self):
         return self.filter(is_invited__isnull=True)
 
+    def invited(self):
+        return self.exclude(is_invited__isnull=True)
+
+    def _completed_lookup(self):
+        return (
+            models.Q(title1__isnull=True) &
+            models.Q(title2__isnull=True) &
+            models.Q(title3__isnull=True)
+        )
+
+    def completed(self):
+        return self.exclude(self._completed_lookup())
+
+    def incomplete(self):
+        return self.filter(self._completed_lookup())
+
+    def without_followup(self):
+        return self.filter(followup_sent__isnull=True)
+
 
 class Result(models.Model):
     person = models.ForeignKey(
@@ -104,6 +123,8 @@ class Result(models.Model):
         verbose_name='#3',
         related_name='title3')
     is_invited = models.DateTimeField(
+        null=True, blank=True)
+    followup_sent = models.DateTimeField(
         null=True, blank=True)
 
     objects = ResultQuerySet.as_manager()
