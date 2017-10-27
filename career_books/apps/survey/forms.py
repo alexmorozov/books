@@ -65,9 +65,18 @@ class SurveyForm(forms.ModelForm):
                 'data-placeholder': 'Click here and start typing the title.',
             }
         )
-        fields = ['title1', 'title2', 'title3', ]
+        fields = ['title1', 'title2', 'title3', 'read_nothing', ]
         widgets = {
             'title1': ac_widget,
             'title2': ac_widget,
             'title3': ac_widget,
         }
+
+    def clean(self):
+        cleaned_data = super(SurveyForm, self).clean()
+        titles = any(cleaned_data.get(title)
+                     for title in ['title1', 'title2', 'title3', ])
+
+        if not titles and not cleaned_data.get('read_nothing'):
+            raise forms.ValidationError('Please either specify at least one '
+                                        'title or set the checkbox below')

@@ -122,6 +122,8 @@ class Result(models.Model):
     title3 = BookForeignKey(
         verbose_name='#3',
         related_name='title3')
+    read_nothing = models.BooleanField(
+        default=False)
     is_invited = models.DateTimeField(
         null=True, blank=True)
     followup_sent = models.DateTimeField(
