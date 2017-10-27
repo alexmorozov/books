@@ -49,7 +49,7 @@ class ResultAdmin(admin.ModelAdmin):
     readonly_fields = ['uid', 'created', 'updated', ]
     list_select_related = ('person', )
     search_fields = ['person__name', 'person__company__name', 'uid', ]
-    list_filter = [IsFilledFilter, ]
+    list_filter = [IsFilledFilter, IsInvitedFilter, ]
 
 
 @admin.register(Book)
