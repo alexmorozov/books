@@ -173,6 +173,9 @@ class Book(models.Model):
 
         self.title = root['title']
         self.image = root['small_image_url']
-        self.author = root['authors']['author'][0]['name']
+        authors = root['authors']['author']
+        if not isinstance(authors, list):
+            authors = [authors, ]
+        self.author = authors[0]['name']
 
         self.save()
