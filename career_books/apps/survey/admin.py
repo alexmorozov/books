@@ -1,13 +1,10 @@
 from django.contrib import admin
-from django.db.models import Q
 from django.utils.html import format_html
 
 from survey.models import Result, Book
 
 
-class IsFilledFilter(admin.SimpleListFilter):
-    parameter_name = 'is_filled'
-    title = 'Is filled out'
+class BooleanFilter(admin.SimpleListFilter):
     NO, YES = '0', '1'
 
     def lookups(self, request, model_admin):
@@ -18,10 +15,32 @@ class IsFilledFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value() == self.NO:
-            return queryset.incomplete()
+            return self.no(request, queryset)
 
         if self.value() == self.YES:
-            return queryset.completed()
+            return queryset.yes(request, queryset)
+
+
+class IsFilledFilter(BooleanFilter):
+    parameter_name = 'is_filled'
+    title = 'Is filled out'
+
+    def yes(self, request, queryset):
+        return queryset.completed()
+
+    def no(self, request, queryset):
+        return queryset.incomplete()
+
+
+class IsInvitedFilter(BooleanFilter):
+    parameter_name = 'is_invited'
+    title = 'Is invited'
+
+    def yes(self, request, queryset):
+        return queryset.invited()
+
+    def no(self, request, queryset):
+        return queryset.uninvited()
 
 
 @admin.register(Result)
