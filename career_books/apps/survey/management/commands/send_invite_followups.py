@@ -39,10 +39,12 @@ Did you have a chance to look at my survey form?
 Let me remind you what the point is.
 
 I want to create a super-useful list of greatest books on self-development and teamwork.
-But I'd like to ask out not theorists and professional critics, but successful practitioners like you.
+But I'd like to ask out not theorists and professional critics, but successful
+practitioners like you.
 
 That's why I need your input very much. It would take just a minute.
 Here's the link to the form: {url}
+If you don't read that kind of books, plese check the corresponding checkbox, that's a very valueable input too.
 
 If there are any issues with filling out the form, just let me know.
 I'll get that straightened out right away.
