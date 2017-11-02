@@ -86,18 +86,21 @@ class ResultQuerySet(models.QuerySet):
     def invited(self):
         return self.exclude(is_invited__isnull=True)
 
-    def _completed_lookup(self):
-        return (
+    def completed(self):
+        return self.filter(
+            models.Q(read_nothing=True) |
+            models.Q(title1__isnull=False) |
+            models.Q(title2__isnull=False) |
+            models.Q(title3__isnull=False)
+        )
+
+    def incomplete(self):
+        return self.filter(
+            models.Q(read_nothing=False) &
             models.Q(title1__isnull=True) &
             models.Q(title2__isnull=True) &
             models.Q(title3__isnull=True)
         )
-
-    def completed(self):
-        return self.exclude(self._completed_lookup())
-
-    def incomplete(self):
-        return self.filter(self._completed_lookup())
 
     def without_followup(self):
         return self.filter(followup_sent__isnull=True)
