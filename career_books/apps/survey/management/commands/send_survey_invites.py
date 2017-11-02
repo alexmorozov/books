@@ -29,10 +29,10 @@ class Command(BaseCommand):
 
     def send_invite(self, form):
         log.info('Sending an invite to %s', form.person.name)
-        message = '''
+        message = u'''
 Hi {{person.first_name}},
 
-I am creating a list of the best self-development, leadership, and teamwork books according to my LinkedIn contacts.
+I am creating a list of the best business, self-development, leadership, and teamwork books according to my LinkedIn contacts.
 Would you mind sharing your favorites? Here is a 1-minute form:
 {url}
 

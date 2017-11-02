@@ -38,7 +38,7 @@ Hi {{person.first_name}},
 Did you have a chance to look at my survey form?
 Let me remind you what the point is.
 
-I want to create a super-useful list of greatest books on self-development and teamwork.
+I want to create a super-useful list of greatest books on business, self-development and teamwork.
 But I'd like to ask out not theorists and professional critics, but successful
 practitioners like you.
 
