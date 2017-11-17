@@ -144,6 +144,17 @@ class Result(models.Model):
         )
 
 
+class BookQuerySet(models.QuerySet):
+    def by_votes(self):
+        return (
+            self.annotate(
+                votes=(
+                    models.Count('title1', distinct=True) +
+                    models.Count('title2', distinct=True) +
+                    models.Count('title3', distinct=True)))
+            .order_by('-votes'))
+
+
 class Book(models.Model):
     gr_id = models.CharField(
         max_length=50, unique=True)
@@ -159,6 +170,8 @@ class Book(models.Model):
     amazon_url = models.URLField(
         max_length=1024,
         blank=True, default='')
+
+    objects = BookQuerySet.as_manager()
 
     def __unicode__(self):
         return self.title or self.gr_id
