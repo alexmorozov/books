@@ -15,9 +15,8 @@ log = logging.getLogger(__name__)
 
 class Command(ProcessListCommand):
     def add_arguments(self, parser):
-        parser.add_argument('--max', type=int, default=100)
+        super(Command, self).add_arguments(parser)
         parser.add_argument('--days', type=int, default=5)
-        parser.add_argument('--dry-run', action='store_true')
 
     def get_list(self, *args, **options):
         incomplete = Result.objects.invited().incomplete().without_followup()
@@ -28,7 +27,6 @@ class Command(ProcessListCommand):
         return outstanding
 
     def process_item(self, item, *args, **options):
-        log.info('Sending a followup to %s', item.person.name)
         message = '''
 Hi {person.first_name},
 
@@ -55,12 +53,10 @@ Alex
                      message, dry_run=options['dry_run'])
 
     def finalize_item(self, item, results, *args, **options):
-        if not options['dry_run']:
-            item.followup_sent = timezone.now()
-            item.save()
+        item.followup_sent = timezone.now()
+        item.save()
 
     def skip_item(self, item, *args, **options):
-        if not options['dry_run']:
-            item.followup_sent = timezone.now()
-            item.read_nothing = True
-            item.save()
+        item.followup_sent = timezone.now()
+        item.read_nothing = True
+        item.save()

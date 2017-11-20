@@ -13,18 +13,10 @@ log = logging.getLogger(__name__)
 
 
 class Command(ProcessListCommand):
-    def add_arguments(self, parser):
-        parser.add_argument('--max', type=int, default=100)
-        parser.add_argument('--dry-run', action='store_true')
-
     def get_list(self, *args, **options):
-        return (Result.objects
-                .uninvited()
-                .order_by('pk')
-                [:options['max']])
+        return Result.objects.uninvited().order_by('pk')
 
     def process_item(self, item, *args, **options):
-        log.info('Sending an invite to %s', item.person.name)
         message = u'''
 Hi {person.first_name},
 
@@ -44,12 +36,10 @@ Alex
                      message, dry_run=options['dry_run'])
 
     def finalize_item(self, item, results, *args, **options):
-        if not options['dry_run']:
-            item.is_invited = timezone.now()
-            item.save()
+        item.is_invited = timezone.now()
+        item.save()
 
     def skip_item(self, item, *args, **options):
-        if not options['dry_run']:
-            item.is_invited = timezone.now()
-            item.read_nothing = True
-            item.save()
+        item.is_invited = timezone.now()
+        item.read_nothing = True
+        item.save()

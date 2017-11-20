@@ -146,20 +146,23 @@ class Result(models.Model):
 
 class BookQuerySet(models.QuerySet):
     def by_votes(self):
-        return (
-            self.annotate(
-                votes=(
-                    models.Count('title1', distinct=True) +
-                    models.Count('title2', distinct=True) +
-                    models.Count('title3', distinct=True)))
-            .order_by('-votes'))
+        return Book.objects.raw('''
+        SELECT survey_book.*,
+              (SELECT COUNT(r.id) FROM survey_result r
+              WHERE r.title1_id = survey_book.gr_id OR
+                    r.title2_id = survey_book.gr_id OR
+                    r.title3_id = survey_book.gr_id)
+              AS votes
+        FROM survey_book
+        ORDER BY votes DESC;
+        ''')
 
 
 class Book(models.Model):
     gr_id = models.CharField(
         max_length=50, unique=True)
     title = models.CharField(
-        max_length=200,
+        max_length=400,
         blank=True, default='')
     author = models.CharField(
         max_length=200,
