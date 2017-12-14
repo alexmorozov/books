@@ -27,7 +27,7 @@ class Command(ProcessListCommand):
         return outstanding
 
     def process_item(self, item, *args, **options):
-        message = '''
+        message = u'''
 Hi {person.first_name},
 
 Did you have a chance to look at my survey form?

@@ -7,7 +7,9 @@ from li.models import Company, Person, Skill, IncorrectContact
 
 @admin.register(Company)
 class CompanyAdmin(admin.ModelAdmin):
-    list_display = ['name', 'get_staff_count', ]
+    list_display = ['name', 'get_staff_count', 'location',
+                    'industry', 'website', 'year_founded',
+                    'employee_count', ]
     search_fields = ['name', ]
 
     def get_queryset(self, request):
@@ -16,7 +18,7 @@ class CompanyAdmin(admin.ModelAdmin):
 
     def get_staff_count(self, obj):
         return obj.staff__count
-    get_staff_count.short_description = 'Staff'
+    get_staff_count.short_description = 'Connections'
     get_staff_count.admin_order_field = 'staff__count'
 
 

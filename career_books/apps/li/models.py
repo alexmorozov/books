@@ -2,10 +2,28 @@ from __future__ import unicode_literals
 
 from django.db import models
 
+from li.utils import canonicalize
+
 
 class Company(models.Model):
     name = models.CharField(
         max_length=1000)
+    location = models.CharField(
+        max_length=100,
+        blank=True, default='')
+    industry = models.CharField(
+        max_length=1000,
+        blank=True, default='')
+    website = models.URLField(
+        max_length=1000,
+        blank=True, default='')
+    year_founded = models.IntegerField(
+        blank=True, null=True)
+    company_type = models.CharField(
+        max_length=200,
+        blank=True, default='')
+    employee_count = models.IntegerField(
+        default=0)
 
     class Meta:
         db_table = 'company'
@@ -61,6 +79,8 @@ class Person(models.Model):
         default=False)
     is_introvert = models.BooleanField(
         default=False)
+    connected_at = models.DateTimeField(
+        null=True, blank=True)
 
     region = models.CharField(
         blank=True, default='',
@@ -94,6 +114,10 @@ class Person(models.Model):
     @property
     def first_name(self):
         return self.name.split()[0]
+
+    def save(self, **kwargs):
+        self.profile_url = canonicalize(self.profile_url)
+        super(Person, self).save(**kwargs)
 
 
 class IncorrectContact(models.Model):
